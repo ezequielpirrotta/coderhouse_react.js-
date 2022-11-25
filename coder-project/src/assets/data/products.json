@@ -1,0 +1,26 @@
+{
+    "products": [
+        {
+            "id": "11556",
+            "price": 350,
+            "currency": "$",
+            "name": "Latte",
+            "image": "cafe_1.jpg"
+        },
+        {
+            "id": "66523",
+            "price": 320,
+            "currency": "$",
+            "name": "Cortado",
+            "image": "cafe_1.jpg"
+        },
+        {
+            "id": "97923",
+            "price": 390,
+            "currency": "$",
+            "name": "Capuccino",
+            "image": "cafe_1.jpg"
+        }
+    ]
+    
+}

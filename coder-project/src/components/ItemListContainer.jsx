@@ -1,8 +1,8 @@
 import React from "react";
-import products_info from '../assets/data/products.json';
+import products_info from '../assets/products.json';
 import SingleProduct from "./SingleProduct";
 
-function Products() 
+function ItemListContainer() 
 {
     let products = [];
     for(let item in products_info["products"])
@@ -11,18 +11,20 @@ function Products()
     }
 
     return (
-        <div id="products">
+        <div id="products" className="container-fluid justify-content-center">
+            <div className="row justify-content-center">
             {
                 products.map(product =>
                 {
                     return(
-                        <SingleProduct info={product}></SingleProduct>
+                        <SingleProduct product={product}></SingleProduct>
                     );
                 }
 
             )}
+            </div>
         </div>
     );
 }
 
-export default Products;
+export default ItemListContainer;

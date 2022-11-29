@@ -1,19 +1,14 @@
-import Header from './components/Header';
-import Products from './components/Products';
+import ItemListContainer from './components/ItemListContainer';
+import Footer from './components/Footer';
+import NavBar from './components/NavBar';
 //import './styles/styles.css';
-
 
 function App() {
   return (
-    <div className="container">
-      <div className='row'>
-        <Header/>
-      </div>
-      
-      <div className='row'>
-        <Products/>
-      </div>
-      
+    <div >
+      <NavBar/>
+      <ItemListContainer/>
+      <Footer/>
     </div>
   );
 }

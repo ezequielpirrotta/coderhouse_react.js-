@@ -1,6 +1,9 @@
 @import "globalVariables";
 @import "_generals";
 
+/*html{
+    height: 100%;
+}*/
 .column_form {
     display: flex;
     align-content: center;
@@ -18,33 +21,31 @@ body {
     animation-duration: 2s;
     animation-name: aparecer;
     animation-iteration-count: 1;
-}
-.bg-light {
-    background-color: map-get($estilos_generales, navbar-color);
-}
+} 
 .animate__animated.animate__backInDown, .animate__animated.animate__backOutUp{
     --animate-duration: 0.5s;
   }
-#main_form {
-    @extend .column_form;
-    margin: 30px;
-    align-items: center;
-    select {
-        align-items: center;
-        width:20%;
-        max-width:90%;
+
+.header{
+    margin: 5px;
+}
+.footer{
+    display: flex;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    //margin-top: auto;
+    text-align: center;
+    justify-content: space-between;
+}
+#products{
+    display: flex;
+    flex-wrap: wrap;
+    .product {
+        margin: 5px;
     }
 }
-#root{
-    .container{
-        .row{
-            #products{
-                display: flex;
-                flex-wrap: wrap;
-                .product {
-                    
-                }
-            }
-        }
-    }
-}
+
+
+    
+

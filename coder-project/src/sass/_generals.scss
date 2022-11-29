@@ -6,7 +6,8 @@ html {
     height: 100%;
 }
 body {
-    background-color: map-get($estilos_generales, background-color);
+    //background-color: map-get($estilos_generales, background-color);
+    background-color:"text-bg-light p-3";
 }
 a{
     text-align: justify;

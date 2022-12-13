@@ -42,9 +42,29 @@ body {
     display: flex;
     flex-wrap: wrap;
     .product {
-        margin: 5px;
+        margin: 4px;
+
     }
 }
+.count-section {
+    background: rgb(234, 227, 227);
+    color: rgb(16, 4, 35);
+    border-radius: 50px;
+    display: flex;
+    text-align: center;
+    margin: 0px;
+    overflow: hidden;
+    align-items: center;
+    width: 90px;
+    height: 28px;
+    line-height: 16px;
+}
+
+/*#cart_items {
+    @if value {
+        
+    }
+}*/
 
 
     

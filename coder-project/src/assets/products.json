@@ -1,26 +1,52 @@
-{
-    "products": [
-        {
-            "id": "11556",
-            "price": 350,
-            "currency": "$",
-            "name": "Latte",
-            "image": "./images/cafe_1.png"
-        },
-        {
-            "id": "66523",
-            "price": 320,
-            "currency": "$",
-            "name": "Cortado",
-            "image": "./images/cafe_1.png"
-        },
-        {
-            "id": "97923",
-            "price": 390,
-            "currency": "$",
-            "name": "Capuccino",
-            "image": "./images/cafe_1.png"
-        }
-    ]
-    
-}
+[
+    {
+        "id": 11556,
+        "price": 350,
+        "currency": "$",
+        "name": "Latte",
+        "description": "Un shot de espresso con leche al vapor y una fina capa de leche espumosa encima.",
+        "type": "cafe",
+        "image": "/img/cafe_1.png",
+        "stock": 20
+    },
+    {
+        "id": 66523,
+        "price": 320,
+        "currency": "$",
+        "name": "Cortado",
+        "description": "Shot de expresso con menos leche que un cappuchino, servido en taza chica.",
+        "type": "cafe",
+        "image": "/img/cafe_1.png",
+        "stock": 20
+    },
+    {
+        "id": 97923,
+        "price": 390,
+        "currency": "$",
+        "name": "Capuccino",
+        "description": "Café expreso con leche montada al vapor para darle cremosidad, se compone de 125 ml de leche y 25 ml de café.",
+        "type": "cafe",
+        "image": "/img/cafe_1.png",
+        "stock": 20
+    },
+    {
+        "id": 13449,
+        "price": 200,
+        "currency": "$",
+        "name": "Medialuna de manteca",
+        "description": "Medialuna de manteca elaborada con harina, manteca, leche, huevos y azúcar.",
+        "type": "pasteleria",
+        "image": "/img/medialunas_de_Manteca.png",
+        "stock": 25
+    },
+    {
+        "id": 25967,
+        "price": 200,
+        "currency": "$",
+        "name": "Budín de vainilla",
+        "description": "Budín con esencia de vainilla, chips de chocolate y un glaseado de azúcar glas",
+        "type": "pasteleria",
+        "image": "/img/budin-chips-chocolate.png",
+        "stock": 25
+    }
+]

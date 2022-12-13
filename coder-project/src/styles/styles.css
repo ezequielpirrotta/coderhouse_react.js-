@@ -13,7 +13,7 @@ body {
 
 a {
   text-align: justify;
-  text-decoration: none;
+  /*text-decoration: none;*/
 }
 
 .main-content {
@@ -66,3 +66,4 @@ body {
 #products .product {
   margin: 5px;
 }
+

@@ -2,13 +2,13 @@ import React, { useState , useEffect} from "react";
 import ItemDetail from "./ItemDetail";
 import products_info from '../../assets/products.json';
 import { useParams, Link } from "react-router-dom";
-import {ArrowLeftIcon} from '@primer/octicons-react' 
+import { ArrowLeftIcon } from '@primer/octicons-react' 
 
 
 function ItemDetailContainer() 
 {
     const {id} = useParams();
-    const [product, changeProduct] = useState([]);
+    const [product, setProduct] = useState([]);
     useEffect( () => 
     {
         const promesa = new Promise((resolve) =>{
@@ -18,9 +18,10 @@ function ItemDetailContainer()
         })
         
         promesa.then((data) => {
-            changeProduct(data);
+            setProduct(data);
         });
     },[id]);
+    //console.log(product)
     return (
         <div id="product" className="container-fluid justify-content-center">
             <div className="row d-flex justify-content-center">

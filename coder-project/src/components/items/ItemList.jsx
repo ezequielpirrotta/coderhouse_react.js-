@@ -1,13 +1,13 @@
 import React from "react";
 import Item from "./Item";
+import Error from "../errors_&_timeout/Error";
 
 function ItemList({products})
 {
-    if(Array.isArray(products)){
-        if(products.length !== 0)
-        {
+    console.log(products)
+    if(products !== null){
+        if(products.length > 0){
             return (
-                
                 <div className="row justify-content-center">
                     {
                         products.map(product =>
@@ -22,13 +22,9 @@ function ItemList({products})
                 </div>
             );
         }
-        else{
+        else {
             return(
-                <div className="row justify-content-center">
-                    <div className="product col-md-12 alert alert-warning" role="alert">
-                        Espera mientras cargamos tus productos!
-                    </div>
-                </div>
+                <Error status={"wait"} quantity={2}/>
             )  
         }
     }
@@ -36,11 +32,7 @@ function ItemList({products})
     else
     {
         return(
-            <div className="row justify-content-center">
-                <div className="product col-md-12 alert alert-danger" role="alert">
-                    No encontramos productos para la categoría elegida! 
-                </div>
-            </div>
+            <Error status={"empty"} quantity={2}/>
         );
     }
 }

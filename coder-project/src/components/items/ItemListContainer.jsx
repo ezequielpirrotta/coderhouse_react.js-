@@ -5,24 +5,21 @@ import { useParams } from "react-router-dom";
 
 function ItemListContainer() 
 {
-    const [products, changeProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const {cat} = useParams();
-    useEffect( () => 
-    {
-        const promesa = new Promise((resolve, ) =>{
+    useEffect( () => {
+        const promesa = new Promise((resolve) =>{
             setTimeout(() => {
                 resolve(cat? products_info.filter(item => item.type === cat): products_info);
             }, 2000);
         })
         
         promesa.then((data) => {
-            if(data.length > 0)
-            {
-                changeProducts(data);
+            if(data.length > 0) {
+                setProducts(data);
             }
-            else 
-            {
-                changeProducts(null)
+            else {
+                setProducts(null)
             }
 
         });

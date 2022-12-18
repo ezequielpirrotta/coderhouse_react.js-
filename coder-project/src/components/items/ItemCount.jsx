@@ -3,21 +3,21 @@ import Swal from 'sweetalert2';
 
 const ItemCount = ({stock}) => 
 {
-    const [items, modifyItems] = useState(1);
-    const [stockProd, modifyStock] = useState(parseInt(stock))
+    const [items, setItems] = useState(1);
+    const [stockProd, setStockProd] = useState(parseInt(stock))
     const addProduct = () =>
     {
         if(items < stockProd )
         {
             console.log("llegué")
-            modifyItems(items + 1);
+            setItems(items + 1);
         }
     }
     const restProduct = () =>
     {
         if(items > 1)
         {
-            modifyItems(items - 1);
+            setItems(items - 1);
 
         }
     }
@@ -43,11 +43,11 @@ const ItemCount = ({stock}) =>
                 timer: 2000
             })
         }
-        modifyStock(stockProd - items)
-        modifyItems(1)
+        setStockProd(stockProd - items)
+        setItems(1)
         if(stockProd < 0)
         {
-            modifyStock(0)
+            setStockProd(0)
         }
         
     }

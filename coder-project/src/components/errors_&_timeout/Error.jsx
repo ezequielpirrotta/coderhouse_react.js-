@@ -4,7 +4,6 @@ function Error ({status, quantity}) {
     
     let message = "";
     let class_name = "product col-md-12 alert ";
-
     if(status) {
         if(status === "wait" && quantity > 1) {
             message = "Espera mientras cargamos tus productos!";
@@ -15,7 +14,7 @@ function Error ({status, quantity}) {
             class_name = "product col-md-4 alert alert-warning";
         }
         if(status === "empty" && quantity > 1) {
-            message = "No encontramos productos para la categoría elegida!";
+            message = "No encontramos productos!";
             class_name = class_name + "alert-danger";
         }
         else if(status === "empty") {

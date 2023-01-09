@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/cosas_para_probar_luego_de_entrega.txt
 /.pnp
 .pnp.js
 

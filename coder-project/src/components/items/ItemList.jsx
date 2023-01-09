@@ -4,7 +4,7 @@ import Error from "../errors_&_timeout/Error";
 
 function ItemList({products})
 {
-    console.log(products)
+    //console.log(products)
     if(products !== null){
         if(products.length > 0){
             return (
@@ -13,7 +13,7 @@ function ItemList({products})
                         products.map(product =>
                         {
                             return(
-                                <div key = {product.id} className="product col-sm-4 col-md-3">
+                                <div key = {product.id} className={products.length >= 3?"product col-sm-4 col-md-3":"product col-sm-4 col-md-5"}>
                                     <Item product={product}></Item>
                                 </div>
                             );

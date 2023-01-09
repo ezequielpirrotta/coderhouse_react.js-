@@ -9,7 +9,7 @@ function LoadLinks({links}) {
                 links.map(link =>
                 {
                     return(
-                        <li className="nav-item">
+                        <li key = {link.name} className="nav-item">
                             <NavLink className="nav-link text-decoration-none" style = {({ isActive }) => 
                                     isActive ? {color: "black"} : undefined
                                 }  activeclassname = "page" to={link.route}>

@@ -17,7 +17,7 @@ function ItemListContainer()
             getDocs(col).then((snapshot) => {
                 
                 let result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); 
-                setProducts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+                setProducts(result);
     
                 if(!Array.isArray(result) || result.length <= 0) {
                     setProducts(null);

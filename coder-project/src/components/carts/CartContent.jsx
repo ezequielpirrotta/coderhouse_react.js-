@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import Form from "../CheckoutForm";
 import { Link } from "react-router-dom";
 import { CartContext } from "./CartContext";
 

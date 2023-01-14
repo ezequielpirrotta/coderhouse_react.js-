@@ -4,12 +4,15 @@ import LoadLinks from "./LoadLinks";
 import CartWidget from "./CartWidget";
 import { CartContext } from "../carts/CartContext";
 import { PersonIcon } from "@primer/octicons-react";
+import { useEffect } from "react";
 
 function NavBar() {
-    const {login, auth} = useContext(CartContext)
+    const {login} = useContext(CartContext)
     const links = [
         {route:"/categoria/cafe",name:"Cafés"},{route:"/categoria/pasteleria",name:"Pasteleria"},{route:"/categoria/merchandising",name:"Merchandising"}
     ];
+    //console.log(login)
+   
     return (
         <div className='container-fluid '>
             <div className="row nav-bar">
@@ -36,14 +39,12 @@ function NavBar() {
                     <CartWidget className="m-2"/>
                     {
                         
-                        !auth.currentUser?
+                        !login?
                                 
-                            <Link to={"/login"} className="row m-2 btn btn-warning" title="Inicia sesión">Inicia sesión</Link>
+                            <Link to={'/login'} className="row m-2 btn btn-warning" title="Inicia sesión">Inicia sesión</Link>
                                :        
-                            <div>
-                                <Link to={"/profile"} className="m-2 btn"><PersonIcon size={24} /></Link> 
-                            </div>
-                               
+                            <Link to={"/user"} className="m-2 btn"><PersonIcon size={24} /></Link> 
+                                  
                     }   
                 </div>
             </div>

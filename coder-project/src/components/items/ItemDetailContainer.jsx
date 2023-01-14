@@ -11,10 +11,7 @@ function ItemDetailContainer()
     const [product, setProduct] = useState([]);
     const {id} = useParams();
     const { db } = useContext(CartContext);
-    const [saved, setSaved] = useState(false);
-    const onSave = () => {
-        setSaved(true)
-    }
+    
     let document = doc(db, "items", id) 
     useEffect( () => 
     {
@@ -40,24 +37,6 @@ function ItemDetailContainer()
                             <ArrowLeftIcon size={24} />
                         </button>
                     </Link>
-                </div>
-                <div className="col-md-4 justify-content-center d-flex-end">
-                    {
-                        () => {
-                            if(saved) {
-
-                                console.log(JSON.stringify(saved))
-                                return(<BookmarkFillIcon className="btn" size={64} />);
-                            }
-                            else {
-                                <div>
-                                    <BookmarkIcon className="btn" onClick={onSave} size={64} />
-                                    <p>{JSON.stringify(saved)}</p>
-                                </div>
-                            }
-                        }
-                            
-                    }
                 </div>
             </div>
             <ItemDetail product={product}/>

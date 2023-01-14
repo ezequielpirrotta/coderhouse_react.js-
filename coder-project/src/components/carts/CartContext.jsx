@@ -1,33 +1,20 @@
 import React from "react";
 import { useState, createContext } from "react";
-import {getFirestore} from "firebase/firestore";
+import {getFirestore, doc, getDoc, getDocs, collection, addDoc, query, where} from "firebase/firestore";
 import { useEffect } from "react";
-import { getAuth, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect,onAuthStateChanged } from "firebase/auth";
-import { stringify } from "@firebase/util";
-
 
 export const CartContext = createContext();
-
 
 function CartContextProvider({children}) {
 
     const db = getFirestore();
     const [cart, setCart] = useState([]);
     const [login, setLogin] = useState(false);
-    const auth = getAuth();
-    const [user, setUser] = useState({});
-    const provider = new GoogleAuthProvider();
+    const [currentUser, setCurrentUser] = useState({})
 
     useEffect(() => {
+        
         let sessionCart = window.localStorage.getItem("cart");
-        //console.log(cart)
-        console.log(auth.currentUser)
-        onAuthStateChanged(auth, (usr) => {
-            if (!usr) {
-              setLogin(false)
-            }
-            setLogin(true)
-        });
         if(totalCart() === 0 || !sessionCart){
 
             if(totalCart() === 0 && sessionCart){
@@ -38,62 +25,84 @@ function CartContextProvider({children}) {
             }
             
         }
-    })
+    },[])
     
-    const loginGoogle = () => {
+    const checkUserExists = (email) => {
+        const user = doc(db, "users", email) 
+        getDoc(user).then((snapshot) => {
+            if(snapshot.exists()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+    }
+    const getUser = (email) => {
+        //const user = doc(db, "users", email)
+        
+        const usersCollection = collection(db, "users")
+        const q = email? query(usersCollection, where("email", "==", email)) : usersCollection 
+        getDocs(q)
+        .then((snapshot) => {
+            let user = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+            console.log(user)
+            if(user[0]) {
+                setCurrentUser(user[0])
+                return true
+            }
+            else {
+                return false;
+            }
+        })
+        
+    }
+   
+    /*const userLogin = (email) => {
+        let user = null;
         if(!login) {
-            signInWithRedirect(auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                //const credential = GoogleAuthProvider.credentialFromResult(result);
-                //const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
+            user = getUser(email);
+            console.log("entre")
+            if(user) {
+                setCurrentUser(user)
                 setLogin(true)
-                return(user);
-            });
+                return login;
+            }
+            else {
+                setLogin(false)
+                return login;
+            }  
         }
+        return(user);
+    }*/
+    const register = (email, name, last_name, cell_number ) => {
+        console.log(cell_number)
+        let newUser = null;
+        if(!login) {
+            
+            if(!checkUserExists(email)) {
+                const usersCollection = collection(db, "users") 
+                newUser = {
+                    email: email,
+                    cell_number: cell_number,
+                    name: name,
+                    last_name: last_name
+                }
+                addDoc(usersCollection, newUser);
+                setCurrentUser(newUser)
+                setLogin(true);
+            }
+            else {
+                return false;  
+            }
+        }
+        return(newUser);
+
     }
     
-    const loginUser = (email, password) => {
-        if(!login) {
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => { 
-                    const user = userCredential.user;
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode)
-                    console.log(errorMessage)
-
-                    /*createUserWithEmailAndPassword(auth, email,password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        
-                        //const token = userCredential.accessToken;
-                        // The signed-in user info.
-                        //const user = result.user;
-                        setLogin(true)
-                        return(user)
-                    });*/
-                }) 
-
-        }
-        return(auth.user);
-    }
     const closeUserSession = () => {
-        signOut(auth).then(() => {
-            return(
-                JSON.stringify(
-                    {
-                        status:200
-                    }
-                )
-            )
-          }).catch((error) => {
-            // An error happened.
-          });
+        setCurrentUser({})
+        setLogin(false)
     }
 
     
@@ -138,14 +147,17 @@ function CartContextProvider({children}) {
             value={{
                 cart,
                 db,
-                auth,
+                login,
+                currentUser,
                 addItem,
                 removeItem,
                 clearCart,
                 totalCart,
                 totalPrice,
-                loginUser,
-                loginGoogle,
+                getUser,
+                setCurrentUser,
+                //userLogin,
+                register,
                 closeUserSession,
             }}>
             {children}

@@ -8,72 +8,93 @@ import Error from "./errors_&_timeout/Error";
 
 function Orders () {
     // 'from' puede contener valor(integer) 1 o 2 segun si viene de 'checkout' o de 'profile'
-    const {auth, db, login} = useContext(CartContext);
+    const {db} = useContext(CartContext);
     const [orders, setOrders] = useState([]);
-    const user = login? auth.currentUser : {};
+    const [search, setSearch] = useState("")
+    const params = useParams()
+    let orderId = params? params.orderId : null;
+    console.log(orderId)
 
     useEffect(() => {
-        if(login) {
-
-            let document = doc(db, "orders", user.uid) 
-            getDoc(document).then((snapshot) => {
-                if(snapshot.exists()) {
-                    setOrders({ id: snapshot.id, ...snapshot.data() })
-                }
-                else {
-                    setOrders(null)
-                }
-            })
         
+        //const col = ordersCollection;
         
-    
-            const ordersCollection = collection(db, "orders");
-            const col = user.uid ? query(ordersCollection, where("type", "==", user.uid)) : ordersCollection;
-            
-            try {
-                getDocs(col).then((snapshot) => {
-                    
-                    let result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); 
-                    setOrders(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-        
-                    if(!Array.isArray(result) || result.length <= 0) {
-                        setOrders(null);
+        try {
+            if(orderId ){
+                const documento = doc(db, "orders", orderId);
+                getDoc(documento).then((snapShot) => {
+                    if (snapShot.exists()) {
+                        setOrders([{id:snapShot.id, ...snapShot.data()}]);
+                        console.log(orders)
+                    } else {
+                        console.log("Error! No se encontró el Documento!");
                     }
                 });
             }
-            catch(e) {
-                console.log(e)
+            else {
+
+                const ordersCollection = collection(db, "orders");
+                //const col = orderId? query(ordersCollection, where("id", "==", orderId)) : ordersCollection;
+                getDocs(ordersCollection).then((snapshot) => {
+                    
+                    let result = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); 
+                    console.log(result)
+                    
+                    if(!Array.isArray(result) || result.length <= 0) {
+    
+                        setOrders(null);
+                    }
+                    else {
+                        result = result.filter((element) => {
+                            if(Object.values(element).includes("test")){
+                                return false;
+                            }
+                            return true;
+                        })
+                        setOrders(result);
+                        
+                    }
+                    /*if(orderId) {
+                        result = result.filter((element) => {
+                            if(Object.values(element).includes(orderId)){
+                                return true;
+                            }
+                            return false;
+                        })
+                        setOrders(result)
+                    }*/
+                });
             }
+            
         }
-        else {
-            window.location.href = '/login';
+        catch(e) {
+            console.log(e)
         }
         
-    }, [user.uid]);
-
+    }, []);
+    
     if(orders !== null){
         if(orders.length > 0){
+            console.log(orders);
             return (
                 <div className="row justify-content-center">
+                    <form className="d-flex" role="search" >
+                        <input className="form-control me-2" type="search" placeholder="Buscar" onChange={
+                            e => setSearch(e.target.value)
+                        } name="search" aria-label="Buscar"/>
+                        <Link to={"/orders/"+search} className="btn btn-outline-success" type="submit">Buscar</Link>
+                    </form>
                     {
                         orders.map(order =>
                         {
                             return(
-                                <div key = {order.id} className={orders.length >= 3?"product col-sm-4 col-md-3":"product col-sm-4 col-md-5"}>
+                                <div key = {order.id} className={orders.length >= 3?"product col-sm-4 col-md-3":"product col"}>
                                     <Order order={order}></Order>
                                 </div>
                             );
                         })
                     }
-                    <div className="row justify-content-center">
-                        <div className="card col-md-3 " width='18rem'>
-                            <div className="card-body">
-                                <h5 className="card-title">Su compra</h5>
-                                <h6 className ="card-subtitle mb-2 text-muted">Total: ${5}</h6>
-                                <Link className="row btn btn-primary" to={origin===1?'/':origin===2?'/profile':''} title="Volver">Volver</Link>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             );
         }
@@ -94,16 +115,6 @@ function Orders () {
             </div>
         );
     }
-    return(
-        <div id="products" className="container-fluid justify-content-center">
-            {
-                () => {
-
-                }
-            }
-            
-        </div>
-    );
 
 }
 export default Orders;

@@ -3,11 +3,9 @@ import { Link} from "react-router-dom";
 import LoadLinks from "./LoadLinks";
 import CartWidget from "./CartWidget";
 import { CartContext } from "../carts/CartContext";
-import { PersonIcon } from "@primer/octicons-react";
-import { useEffect } from "react";
+import Orders from "../Orders";
 
 function NavBar() {
-    const {login} = useContext(CartContext)
     const links = [
         {route:"/categoria/cafe",name:"Cafés"},{route:"/categoria/pasteleria",name:"Pasteleria"},{route:"/categoria/merchandising",name:"Merchandising"}
     ];
@@ -37,15 +35,7 @@ function NavBar() {
                 </div>
                 <div className="col-md-4 d-flex justify-content-center align-items-center">
                     <CartWidget className="m-2"/>
-                    {
-                        
-                        !login?
-                                
-                            <Link to={'/login'} className="row m-2 btn btn-warning" title="Inicia sesión">Inicia sesión</Link>
-                               :        
-                            <Link to={"/user"} className="m-2 btn"><PersonIcon size={24} /></Link> 
-                                  
-                    }   
+                    <Link to={"/orders"} className="btn btn-secondary">Ir a órdenes</Link>
                 </div>
             </div>
         </div>

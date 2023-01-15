@@ -72,6 +72,3 @@ const Order = ({order}) =>
     
 }
 export default Order;
-/**
- * <img src={item.image} alt={item.name} width={64}/>
- */

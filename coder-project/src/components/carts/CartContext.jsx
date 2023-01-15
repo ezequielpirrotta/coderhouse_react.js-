@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, createContext } from "react";
-import {getFirestore, doc, getDoc, getDocs, collection, addDoc, query, where} from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 import { useEffect } from "react";
 
 export const CartContext = createContext();
@@ -9,9 +9,7 @@ function CartContextProvider({children}) {
 
     const db = getFirestore();
     const [cart, setCart] = useState([]);
-    const [login, setLogin] = useState(false);
-    const [currentUser, setCurrentUser] = useState({})
-
+   
     useEffect(() => {
         
         let sessionCart = window.localStorage.getItem("cart");
@@ -26,84 +24,6 @@ function CartContextProvider({children}) {
             
         }
     },[])
-    
-    const checkUserExists = (email) => {
-        const user = doc(db, "users", email) 
-        getDoc(user).then((snapshot) => {
-            if(snapshot.exists()) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        })
-    }
-    const getUser = (email) => {
-        //const user = doc(db, "users", email)
-        
-        const usersCollection = collection(db, "users")
-        const q = email? query(usersCollection, where("email", "==", email)) : usersCollection 
-        getDocs(q)
-        .then((snapshot) => {
-            let user = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-            console.log(user)
-            if(user[0]) {
-                setCurrentUser(user[0])
-                return true
-            }
-            else {
-                return false;
-            }
-        })
-        
-    }
-   
-    /*const userLogin = (email) => {
-        let user = null;
-        if(!login) {
-            user = getUser(email);
-            console.log("entre")
-            if(user) {
-                setCurrentUser(user)
-                setLogin(true)
-                return login;
-            }
-            else {
-                setLogin(false)
-                return login;
-            }  
-        }
-        return(user);
-    }*/
-    const register = (email, name, last_name, cell_number ) => {
-        console.log(cell_number)
-        let newUser = null;
-        if(!login) {
-            
-            if(!checkUserExists(email)) {
-                const usersCollection = collection(db, "users") 
-                newUser = {
-                    email: email,
-                    cell_number: cell_number,
-                    name: name,
-                    last_name: last_name
-                }
-                addDoc(usersCollection, newUser);
-                setCurrentUser(newUser)
-                setLogin(true);
-            }
-            else {
-                return false;  
-            }
-        }
-        return(newUser);
-
-    }
-    
-    const closeUserSession = () => {
-        setCurrentUser({})
-        setLogin(false)
-    }
 
     
     const addItem = (item, quantity) => {
@@ -147,18 +67,11 @@ function CartContextProvider({children}) {
             value={{
                 cart,
                 db,
-                login,
-                currentUser,
                 addItem,
                 removeItem,
                 clearCart,
                 totalCart,
-                totalPrice,
-                getUser,
-                setCurrentUser,
-                //userLogin,
-                register,
-                closeUserSession,
+                totalPrice
             }}>
             {children}
         </CartContext.Provider>
